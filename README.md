@@ -6,10 +6,10 @@
 
 ### Techs utilizadas:
 <strong>#JS - Node.js - Typescript - ReactJS - React Native </strong>
-![techs](./images/logos.png)
+![techs](./images/Logos.png)
 
 ### Versão WEB
 ![pc](./images/PC.png)
 
 ### Versão Mobile
-![pc](./images/CEL.png)
+![pc](./images/Cel.png)
