@@ -13,7 +13,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   ) => void;
 }
 
-const Input: React.FC<InputProps> = ({
+const InputWithoutLabel: React.FC<InputProps> = ({
   name,
   label,
   handleChange,
@@ -21,10 +21,10 @@ const Input: React.FC<InputProps> = ({
   ...rest
 }: InputProps) => {
   return (
-    <div className="input-block">
-      <label htmlFor={name}>{label}</label>
+    <div className="input-without-label">
       <input
         type="text"
+        placeholder={label}
         id={name}
         {...rest}
         onChange={event => handleChange(name, event.target.value, id)}
@@ -33,4 +33,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default InputWithoutLabel;

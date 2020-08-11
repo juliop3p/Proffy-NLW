@@ -7,7 +7,7 @@ import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
 import searchIcon from '../../assets/images/icons/search.svg';
 
-import './styles.css'
+import './styles.css';
 import api from '../../services/api';
 
 const TeacherList: React.FC = () => {
@@ -15,27 +15,25 @@ const TeacherList: React.FC = () => {
     subject: '',
     week_day: '',
     time: '',
-  })
+  });
   const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   const handleChageForm = (field: string, value: string | number) => {
     setTeacherQuery({
       ...teacherQuery,
       [field]: value,
-    })
-  }
+    });
+  };
 
   const searchTeachers = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
     const { data } = await api.get<Teacher[]>('/classes', {
-      params: teacherQuery
-    })
+      params: teacherQuery,
+    });
 
-    console.log(data)
-
-    setTeachers(data)
-  }
+    setTeachers(data);
+  };
 
   const { subject, week_day, time } = teacherQuery;
 
@@ -43,9 +41,9 @@ const TeacherList: React.FC = () => {
     <div id="page-teacher-list" className="container">
       <PageHeader title="Esses são os proffys disponíveis.">
         <form id="search-teachers" onSubmit={searchTeachers}>
-        <Select 
-            name="subject" 
-            label="Matéria" 
+          <Select
+            name="subject"
+            label="Matéria"
             options={[
               { value: 'Artes', label: 'Artes' },
               { value: 'Biologia', label: 'Biologia' },
@@ -60,9 +58,9 @@ const TeacherList: React.FC = () => {
             value={subject}
             handleChange={handleChageForm}
           />
-          <Select 
-            name="week_day" 
-            label="Dia da semana" 
+          <Select
+            name="week_day"
+            label="Dia da semana"
             options={[
               { value: '0', label: 'Domingo' },
               { value: '1', label: 'Segunda-feira' },
@@ -75,24 +73,26 @@ const TeacherList: React.FC = () => {
             value={week_day}
             handleChange={handleChageForm}
           />
-          <Input 
-            type="time" 
-            name="time" 
-            label="Hora" 
-            value={time} 
-            handleChange={handleChageForm} 
+          <Input
+            type="time"
+            name="time"
+            label="Hora"
+            value={time}
+            handleChange={handleChageForm}
           />
           <button type="submit" className="search-button">
-            <img src={searchIcon} alt="Search"/>
-          </button>  
-        </form> 
+            <img src={searchIcon} alt="Search" />
+          </button>
+        </form>
       </PageHeader>
 
       <main>
-        {teachers.map(teacher => <TeacherItem key={teacher.id} teacher={teacher} />)}
+        {teachers.map(teacher => (
+          <TeacherItem key={teacher.id} teacher={teacher} />
+        ))}
       </main>
     </div>
   );
-}
+};
 
 export default TeacherList;

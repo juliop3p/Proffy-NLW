@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import * as Yup from 'yup';
+
 import db from '../database/database';
 import convertHourToMinutes from '../utils/convertHoursToMinutes';
 
@@ -12,11 +14,17 @@ class ClassesController {
   public async index(req: Request, res: Response): Promise<Response> {
     const filters = req.query;
 
+    const schema = Yup.object().shape({
+      week_day: Yup.string().required(),
+      subject: Yup.string().required(),
+      time: Yup.string().required(),
+    });
+
     const week_day = filters.week_day as string;
     const subject = filters.subject as string;
     const time = filters.time as string;
 
-    if (!week_day || !subject || !time) {
+    if (!(await schema.isValid(filters))) {
       return res.status(400).json({
         error: 'Missing filters to search classes',
       });
@@ -41,16 +49,41 @@ class ClassesController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, avatar, whatsapp, bio, subject, cost, schedule } = req.body;
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      avatar: Yup.string().required(),
+      user_id: Yup.string().required(),
+      whatsapp: Yup.string().required(),
+      bio: Yup.string().required(),
+      subject: Yup.string().required(),
+      cost: Yup.string().required(),
+      schedule: Yup.array().required(),
+    });
 
     const trx = await db.transaction();
 
     try {
-      const insertedUsersIds = await trx('users').insert({
+      if (!(await schema.isValid(req.body))) {
+        throw new Error();
+      }
+
+      const {
         name,
         avatar,
         whatsapp,
         bio,
+        user_id: professor_id,
+        subject,
+        cost,
+        schedule,
+      } = req.body;
+
+      const insertedUsersIds = await trx('professors').insert({
+        name,
+        avatar,
+        whatsapp,
+        bio,
+        user_id: Number(professor_id),
       });
 
       const user_id = insertedUsersIds[0];
@@ -79,7 +112,6 @@ class ClassesController {
       return res.status(201).json();
     } catch (err) {
       await trx.rollback();
-
       return res
         .status(400)
         .json({ error: 'Unexpected error while creating new class' });
