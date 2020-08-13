@@ -1,3 +1,6 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
 :root {
   --color-background: #F0F0F7;
   --color-primary-lighter: #9871F5;
@@ -59,3 +62,6 @@ textarea {
     font-size: 62.5%;
   }
 }
+`;
+
+export default GlobalStyle;

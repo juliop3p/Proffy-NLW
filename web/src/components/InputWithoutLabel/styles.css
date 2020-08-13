@@ -28,3 +28,15 @@
   top: 1.6rem;
   bottom: 1.56rem;
 }
+
+@media (min-width: 1000px) {
+  .input-without-label input {
+    height: 5.6rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .input-without-label input {
+    height: 7.2rem;
+  }
+}

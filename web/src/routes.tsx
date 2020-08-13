@@ -6,6 +6,7 @@ import TeacherList from './pages/TeacherList';
 import TeacherForm from './pages/TeacherForm';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 
 const Routes: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Routes: React.FC = () => {
       <Route path="/give-classes" component={TeacherForm} />
       <Route path="/signin" component={Signin} />
       <Route path="/signup" component={Signup} />
+      <Route path="/forgot-password" component={ForgotPassword} />
     </BrowserRouter>
   );
 };

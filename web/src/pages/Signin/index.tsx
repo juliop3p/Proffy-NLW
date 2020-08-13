@@ -1,59 +1,105 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import InputWithoutLabel from '../../components/InputWithoutLabel';
+import InputWithIcon from '../../components/InputWithIcon';
+
+import {
+  Container,
+  Hero,
+  ImageBackground,
+  Form,
+  FormOptions,
+  CheckboxGreen,
+  Button,
+  FormAdditional,
+} from './styles';
 
 import logo from '../../assets/images/logo.svg';
 import background from '../../assets/images/background.svg';
 import checkedIcon from '../../assets/images/icons/checked.svg';
 import heart from '../../assets/images/icons/purple-heart.svg';
 
-import './styles.css';
-
 const Signin: React.FC = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [isFormFilledIn, setIsFormFilledIn] = useState(false);
+
+  const handleChageForm = (field: string, value: string | number) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+
+    const { email, password } = formData;
+
+    if (email.length > 0 && password.length > 0) {
+      setIsFormFilledIn(true);
+    } else {
+      setIsFormFilledIn(false);
+    }
+  };
+
   return (
-    <div id="signin" className="container-signin">
-      <div className="hero">
-        <img src={background} alt="Background" className="bg-image" />
+    <Container>
+      <Hero>
+        <ImageBackground src={background} alt="Background" />
         <div>
           <img src={logo} alt="Proffy" />
-          <h3 className="hero-title">Sua plataforma de esdutos online.</h3>
+          <h3>Sua plataforma de esdutos online.</h3>
         </div>
-      </div>
-      <form className="form">
+      </Hero>
+      <Form>
         <h1>Fazer login</h1>
         <InputWithoutLabel
           name="email"
           label="E-mail"
-          handleChange={() => {}}
+          handleChange={handleChageForm}
         />
-        <InputWithoutLabel
+        <InputWithIcon
+          icon={
+            showPassword ? (
+              <IoMdEyeOff size={25} onClick={() => setShowPassword(false)} />
+            ) : (
+              <IoMdEye size={25} onClick={() => setShowPassword(true)} />
+            )
+          }
           name="password"
           label="Senha"
-          handleChange={() => {}}
+          type={showPassword ? 'text' : 'password'}
+          handleChange={handleChageForm}
         />
-        <div className="login-defaults">
-          <div className="remember-me">
-            <div className="checkbox">
+        <FormOptions>
+          <div>
+            <CheckboxGreen>
               <input type="checkbox" />
               <img src={checkedIcon} alt="checked" />
-            </div>
-            <span className="login-defaults-text">Lembrar-me</span>
+            </CheckboxGreen>
+            <span>Lembrar-me</span>
           </div>
-          <span className="login-defaults-text">Esqueci minha senha</span>
-        </div>
-        <button type="submit">Entrar</button>
-        <div className="link-container">
+          <span>Esqueci minha senha</span>
+        </FormOptions>
+        <Button type="submit" filledIn={isFormFilledIn}>
+          Entrar
+        </Button>
+        <FormAdditional>
           <p>
             Não tem conta? <br />
-            <a href="/nah">Cadastre-se</a>
+            <Link to="/signup">Cadastre-se</Link>
           </p>
           <span>
             É de graça
             <img src={heart} alt="Heart" />
           </span>
-        </div>
-      </form>
-    </div>
+        </FormAdditional>
+      </Form>
+    </Container>
   );
 };
 

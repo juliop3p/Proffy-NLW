@@ -11,7 +11,6 @@ import {
   GoBack,
 } from './styles';
 
-import InputWithIcon from '../../components/InputWithIcon';
 import InputWithoutLabel from '../../components/InputWithoutLabel';
 
 import logo from '../../assets/images/logo.svg';
@@ -19,23 +18,21 @@ import background from '../../assets/images/background.svg';
 import backIcon from '../../assets/images/icons/back.svg';
 import SuccessScreen from '../../components/SuccessScreen';
 
-const Signup: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   const { goBack } = useHistory();
-  const [formData, setFormData] = useState({
-    name: '',
-    lastname: '',
-    email: '',
-    password: '',
-  });
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isFormFilledIn, setIsFormFilledIn] = useState(false);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
   const handleChageForm = (field: string, value: string | number) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
+    setEmail('nha');
+
+    if (email.length > 0) {
+      setIsFormFilledIn(true);
+    } else {
+      setIsFormFilledIn(false);
+    }
   };
 
   const handleRegister = (event: FormEvent) => {
@@ -64,35 +61,16 @@ const Signup: React.FC = () => {
         <h1>Cadastro</h1>
         <p>Preencha os dados abaixo para começar.</p>
         <InputWithoutLabel
-          name="name"
-          label="Nome"
-          handleChange={handleChageForm}
-        />
-        <InputWithoutLabel
-          name="lastname"
-          label="Sobrenome"
-          handleChange={handleChageForm}
-        />
-        <InputWithoutLabel
           name="email"
           label="E-mail"
           handleChange={handleChageForm}
         />
-        <InputWithIcon
-          icon={
-            showPassword ? (
-              <IoMdEyeOff size={25} onClick={() => setShowPassword(false)} />
-            ) : (
-              <IoMdEye size={25} onClick={() => setShowPassword(true)} />
-            )
-          }
-          name="password"
-          label="Senha"
-          type={showPassword ? 'text' : 'password'}
-          handleChange={handleChageForm}
-        />
-        <Button type="submit" onClick={handleRegister}>
-          Concluir cadastro
+        <Button
+          type="submit"
+          filledIn={isFormFilledIn}
+          onClick={handleRegister}
+        >
+          Enviar
         </Button>
       </Form>
       <Hero>
@@ -106,4 +84,4 @@ const Signup: React.FC = () => {
   );
 };
 
-export default Signup;
+export default ForgotPassword;
