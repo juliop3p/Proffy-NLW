@@ -1,6 +1,5 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import {
   Container,
@@ -21,12 +20,17 @@ import SuccessScreen from '../../components/SuccessScreen';
 const ForgotPassword: React.FC = () => {
   const { goBack } = useHistory();
 
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({ email: '' });
   const [isFormFilledIn, setIsFormFilledIn] = useState(false);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
   const handleChageForm = (field: string, value: string | number) => {
-    setEmail('nha');
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+
+    const { email } = formData;
 
     if (email.length > 0) {
       setIsFormFilledIn(true);
@@ -35,7 +39,7 @@ const ForgotPassword: React.FC = () => {
     }
   };
 
-  const handleRegister = (event: FormEvent) => {
+  const handleForgotPassword = (event: FormEvent) => {
     event.preventDefault();
     setShowSuccessScreen(true);
   };
@@ -44,10 +48,9 @@ const ForgotPassword: React.FC = () => {
     <Container>
       {showSuccessScreen && (
         <SuccessScreen
-          title="Cadastro concluído"
-          description="Agora você faz parte da plataforma da Proffy. Tenha uma ótima
-          experiência."
-          label="Fazer Login"
+          title="Redefinição enviada!"
+          description="Boa, agora é só checar o e-mail que foi enviado para você redefinir sua senha e aproveitar os estudos."
+          label="Voltar ao login"
           link="signin"
           setHideScreen={setShowSuccessScreen}
         />
@@ -58,8 +61,8 @@ const ForgotPassword: React.FC = () => {
             <img src={backIcon} alt="Voltar" />
           </button>
         </GoBack>
-        <h1>Cadastro</h1>
-        <p>Preencha os dados abaixo para começar.</p>
+        <h1>Eita, esqueceu sua senha?</h1>
+        <p>Não esquenta, vamos dar um geito nisso.</p>
         <InputWithoutLabel
           name="email"
           label="E-mail"
@@ -68,7 +71,7 @@ const ForgotPassword: React.FC = () => {
         <Button
           type="submit"
           filledIn={isFormFilledIn}
-          onClick={handleRegister}
+          onClick={handleForgotPassword}
         >
           Enviar
         </Button>

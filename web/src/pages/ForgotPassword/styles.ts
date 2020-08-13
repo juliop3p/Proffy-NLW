@@ -65,6 +65,7 @@ export const Button = styled.button<{ filledIn: boolean }>`
       : 'var(--color-text-complement)'};
   font: 600 1.6rem 'Archivo';
   cursor: ${props => props.filledIn && 'pointer'};
+  margin-top: 2.4rem;
 `;
 
 export const Hero = styled.div`

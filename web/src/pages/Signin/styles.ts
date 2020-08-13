@@ -76,10 +76,13 @@ export const FormOptions = styled.div`
   div span {
     margin-left: 1.6rem;
     cursor: auto;
+    color: var(--color-text-complement);
   }
 
-  span {
+  a {
     cursor: pointer;
+    text-decoration: none;
+    color: var(--color-text-complement);
   }
 `;
 
@@ -127,6 +130,7 @@ export const FormAdditional = styled.div`
   display: flex;
   justify-content: space-between;
   background: none;
+  color: var(--color-text-complement);
 
   a {
     color: var(--color-primary);
@@ -135,10 +139,6 @@ export const FormAdditional = styled.div`
 
   img {
     margin-left: 0.8rem;
-  }
-
-  span {
-    opacity: 0.8;
   }
 
   @media (min-width: 1400px) {

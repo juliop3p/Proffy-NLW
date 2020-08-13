@@ -57,6 +57,16 @@ textarea {
   max-width: 700px;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5em;
+  border-radius: 0.8rem;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--color-secundary);
+  outline: 1px solid var(--color-box-base);
+}
+
 @media (min-width: 700px) {
   :root {
     font-size: 62.5%;

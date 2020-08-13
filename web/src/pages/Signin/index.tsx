@@ -83,7 +83,7 @@ const Signin: React.FC = () => {
             </CheckboxGreen>
             <span>Lembrar-me</span>
           </div>
-          <span>Esqueci minha senha</span>
+          <Link to="/forgot-password">Esqueci minha senha</Link>
         </FormOptions>
         <Button type="submit" filledIn={isFormFilledIn}>
           Entrar
