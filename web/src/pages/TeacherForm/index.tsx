@@ -1,10 +1,16 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/bootstrap.css';
+
+import InputImage from '../../components/InputImage';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 import Select from '../../components/Select';
+
+import { PhoneInputContainer, PersonalData } from './styles';
 
 import rocket from '../../assets/images/rocket.svg';
 import warningIcon from '../../assets/images/icons/warning.svg';
@@ -14,10 +20,12 @@ import api from '../../services/api';
 
 const TeacherForm: React.FC = () => {
   const history = useHistory();
+  const [phone, setPhone] = useState('');
+
+  const [avatar, setAvatar] = useState<FileList | null>();
 
   const [formData, setFormData] = useState({
     name: '',
-    avatar: '',
     whatsapp: '',
     bio: '',
     subject: '',
@@ -31,6 +39,10 @@ const TeacherForm: React.FC = () => {
       },
     ],
   });
+
+  const handleChangeAvatar = (event: ChangeEvent<HTMLInputElement>) => {
+    setAvatar(event.currentTarget.files);
+  };
 
   const AddNewScheduleItem = () => {
     const newSchedule = [
@@ -111,51 +123,60 @@ const TeacherForm: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Seus dados</legend>
-            <Input
-              name="name"
-              label="Nome Completo"
-              handleChange={handleChangeForm}
-            />
-            <Input
-              name="avatar"
-              label="Avatar"
-              handleChange={handleChangeForm}
-            />
-            <Input
-              name="whatsapp"
-              label="WhatsApp"
-              handleChange={handleChangeForm}
-            />
+            <PersonalData>
+              <img
+                src="https://avatars0.githubusercontent.com/u/52512483?s=460&u=2aac534a0f02106801ab4179f3bf2934b8142944&v=4"
+                alt="Julio"
+              />
+              <h3>Julio Cesar</h3>
+              <PhoneInputContainer>
+                <span>Whatsapp</span>
+                <PhoneInput
+                  country="br"
+                  value={phone}
+                  onChange={number => setPhone(number)}
+                  inputStyle={{
+                    width: '100%',
+                    height: '5.6rem',
+                    background: 'var(--color-input-background)',
+                    border: '1px solid var(--color-line-in-white)',
+                  }}
+                />
+              </PhoneInputContainer>
+            </PersonalData>
             <Textarea
               name="bio"
-              label="Biografria"
+              label="Biografria (Máximo 300 caracteres)"
               handleChange={handleChangeForm}
             />
           </fieldset>
 
           <fieldset>
             <legend>Sobre a aula</legend>
-            <Select
-              name="subject"
-              label="Matéria"
-              options={[
-                { value: 'Artes', label: 'Artes' },
-                { value: 'Biologia', label: 'Biologia' },
-                { value: 'Ciências', label: 'Ciências' },
-                { value: 'Educação fisica', label: 'Educação fisica' },
-                { value: 'Geografia', label: 'Geografia' },
-                { value: 'História', label: 'História' },
-                { value: 'Matemática', label: 'Matemática' },
-                { value: 'Português', label: 'Português' },
-                { value: 'Química', label: 'Química' },
-              ]}
-              handleChange={handleChangeForm}
-            />
-            <Input
-              name="cost"
-              label="Custo de sua hora por aula"
-              handleChange={handleChangeForm}
-            />
+            <div className="input-group">
+              <Select
+                name="subject"
+                label="Matéria"
+                options={[
+                  { value: 'Artes', label: 'Artes' },
+                  { value: 'Biologia', label: 'Biologia' },
+                  { value: 'Ciências', label: 'Ciências' },
+                  { value: 'Educação fisica', label: 'Educação fisica' },
+                  { value: 'Geografia', label: 'Geografia' },
+                  { value: 'História', label: 'História' },
+                  { value: 'Matemática', label: 'Matemática' },
+                  { value: 'Português', label: 'Português' },
+                  { value: 'Química', label: 'Química' },
+                ]}
+                handleChange={handleChangeForm}
+              />
+              <Input
+                name="cost"
+                label="Custo de sua hora por aula"
+                handleChange={handleChangeForm}
+                type="number"
+              />
+            </div>
           </fieldset>
 
           <fieldset>

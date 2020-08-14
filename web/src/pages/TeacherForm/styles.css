@@ -113,6 +113,10 @@
   margin-left: 1.6rem;
 }
 
+.input-number {
+  width: 100%;
+}
+
 @media (min-width: 700px) {
   #page-teacher-form {
     max-width: 100vw;
@@ -151,4 +155,15 @@
     width: 20rem;
     margin-top: 0;
   }
+
+  .input-group {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    grid-gap: 1.6rem;
+  }
+
+  fieldset .select-block + .input-block {
+    margin-top: 0!important;
+  }
+
 }
